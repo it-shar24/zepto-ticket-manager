@@ -1,23 +1,31 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 :root {
   /* --- color tokens ------------------------------------------------ */
-  --bg: #0a0d11;
-  --surface: #12161c;
-  --surface-raised: #181d25;
-  --border: #232a34;
-  --border-soft: #1b212a;
+  --bg: #07080f;
+  --surface: rgba(24, 22, 40, 0.55);
+  --surface-raised: rgba(32, 30, 52, 0.7);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.05);
 
-  --text-primary: #e7eaee;
-  --text-secondary: #9aa4b2;
-  --text-muted: #616b79;
+  --text-primary: #f2f1f8;
+  --text-secondary: #a8a5bd;
+  --text-muted: #6c6884;
 
-  --auto: #4fd1ae;
-  --auto-dim: rgba(79, 209, 174, 0.12);
-  --human: #f0a83c;
-  --human-dim: rgba(240, 168, 60, 0.12);
-  --blocked: #ee6a8a;
-  --blocked-dim: rgba(238, 106, 138, 0.12);
+  --auto: #5cffb0;
+  --auto-glow: rgba(92, 255, 176, 0.35);
+  --auto-dim: rgba(92, 255, 176, 0.12);
+
+  --human: #ffb454;
+  --human-glow: rgba(255, 180, 84, 0.35);
+  --human-dim: rgba(255, 180, 84, 0.12);
+
+  --blocked: #ff5c8a;
+  --blocked-glow: rgba(255, 92, 138, 0.35);
+  --blocked-dim: rgba(255, 92, 138, 0.12);
+
+  --violet: #8a6bff;
+  --violet-glow: rgba(138, 107, 255, 0.4);
 
   /* --- type ----------------------------------------------------------- */
   --font-display: "Space Grotesk", sans-serif;
@@ -38,12 +46,44 @@ html, body, #root {
 body {
   margin: 0;
   background: var(--bg);
-  background-image:
-    radial-gradient(circle at 15% 0%, rgba(79, 209, 174, 0.05), transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(240, 168, 60, 0.04), transparent 45%);
   color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* --- animated aurora background -------------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 15%, var(--violet-glow), transparent 40%),
+    radial-gradient(circle at 82% 8%, var(--auto-glow), transparent 38%),
+    radial-gradient(circle at 75% 75%, var(--human-glow), transparent 42%),
+    radial-gradient(circle at 10% 85%, var(--blocked-glow), transparent 38%);
+  opacity: 0.35;
+  filter: blur(60px);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-2%, 2%) scale(1.08); }
+  100% { transform: translate(3%, -3%) scale(1.02); }
+}
+
+/* subtle grain to keep the glow from looking flat/plasticky */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 button {
@@ -61,6 +101,16 @@ button {
 
 .mono {
   font-family: var(--font-mono);
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -5,8 +5,9 @@
   gap: 24px;
   padding: 20px 32px;
   border-bottom: 1px solid var(--border);
-  background: rgba(18, 22, 28, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(10, 9, 20, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -20,27 +21,31 @@
 }
 
 .header__mark {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 13px;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, var(--auto-dim), var(--human-dim));
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+  background: linear-gradient(155deg, var(--violet), var(--auto) 130%);
+  color: #0a0714;
   flex-shrink: 0;
+  box-shadow: 0 0 24px -4px var(--violet-glow);
 }
 
 .header__title {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .header__subtitle {
@@ -57,34 +62,80 @@
 
 .header__counts {
   display: flex;
-  gap: 16px;
+  gap: 10px;
   font-size: 13px;
+}
+
+.header__count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(8px);
   color: var(--text-secondary);
+}
+
+.header__count-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.header__count--auto .header__count-dot {
+  background: var(--auto);
+  box-shadow: 0 0 6px var(--auto);
+}
+
+.header__count--human .header__count-dot {
+  background: var(--human);
+  box-shadow: 0 0 6px var(--human);
 }
 
 .header__count em {
   font-style: normal;
   font-family: var(--font-mono);
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .header__button {
-  background: var(--text-primary);
-  color: var(--bg);
+  position: relative;
+  background: linear-gradient(120deg, var(--violet), var(--auto));
+  color: #0a0714;
   border: none;
-  padding: 10px 18px;
-  border-radius: 7px;
-  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 9px;
+  font-weight: 700;
   font-size: 13.5px;
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 20px -6px var(--violet-glow);
+  overflow: hidden;
 }
 
 .header__button:hover:not(:disabled) {
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 26px -6px var(--violet-glow);
 }
 
 .header__button:disabled {
-  opacity: 0.55;
   cursor: default;
+}
+
+.header__button--busy {
+  background: linear-gradient(120deg, var(--violet), var(--auto), var(--violet));
+  background-size: 200% auto;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+.header__button-label {
+  position: relative;
+  z-index: 1;
 }

@@ -6,7 +6,7 @@
 
 .app__main {
   flex: 1;
-  padding: 28px 32px 60px;
+  padding: 32px 32px 60px;
   max-width: 1180px;
   width: 100%;
   margin: 0 auto;
@@ -36,16 +36,35 @@
 }
 
 .app__empty {
-  margin-top: 60px;
+  margin-top: 14vh;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
+  animation: pop-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app__empty-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: linear-gradient(155deg, var(--violet-glow), var(--auto-glow));
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
 }
 
 .app__empty-title {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
   margin: 0;
+  background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

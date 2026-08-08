@@ -4,7 +4,9 @@ export default function Header({ onProcess, processing, hasResults, counts }) {
   return (
     <header className="header">
       <div className="header__identity">
-        <div className="header__mark">ZQ</div>
+        <div className="header__mark">
+          <span>Z</span>
+        </div>
         <div>
           <h1 className="header__title">Ticket Resolution Console</h1>
           <p className="header__subtitle">
@@ -16,20 +18,24 @@ export default function Header({ onProcess, processing, hasResults, counts }) {
       <div className="header__right">
         {hasResults && (
           <div className="header__counts">
-            <span className="header__count">
-              <em style={{ color: "var(--auto)" }}>{counts.auto}</em> auto-resolved
+            <span className="header__count header__count--auto">
+              <span className="header__count-dot" />
+              <em>{counts.auto}</em> auto
             </span>
-            <span className="header__count">
-              <em style={{ color: "var(--human)" }}>{counts.human}</em> needs human
+            <span className="header__count header__count--human">
+              <span className="header__count-dot" />
+              <em>{counts.human}</em> human
             </span>
           </div>
         )}
         <button
-          className="header__button"
+          className={`header__button ${processing ? "header__button--busy" : ""}`}
           onClick={onProcess}
           disabled={processing}
         >
-          {processing ? "Processing…" : hasResults ? "Reprocess" : "Process Tickets"}
+          <span className="header__button-label">
+            {processing ? "Processing…" : hasResults ? "Reprocess" : "Process Tickets"}
+          </span>
         </button>
       </div>
     </header>

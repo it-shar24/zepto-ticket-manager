@@ -77,6 +77,7 @@ export default function App() {
 
         {status === "empty" && (
           <div className="app__empty">
+            <div className="app__empty-icon">🎫</div>
             <p className="app__empty-title">No tickets processed yet</p>
             <p className="app__hint">
               Click <strong>Process Tickets</strong> to match every new ticket against

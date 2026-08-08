@@ -1,4 +1,4 @@
-import MatchBar from "./MatchBar";
+import ConfidenceRing from "./ConfidenceRing";
 import "./TicketCard.css";
 
 const REASON_LABEL = {
@@ -19,21 +19,21 @@ const ACTION_LABEL = {
   escalation: "Escalation",
 };
 
-export default function TicketCard({ ticket, onClick }) {
+export default function TicketCard({ ticket, onClick, index = 0 }) {
   const isAuto = ticket.status === "auto";
   const reasonLabel = REASON_LABEL[ticket.reason] || ticket.reason;
   const actionLabel = ACTION_LABEL[ticket.chosen_action] || ticket.chosen_action;
+  const tint = ticket.blocked_by_guardrail ? "var(--blocked)" : isAuto ? "var(--auto)" : "var(--human)";
 
   return (
-    <button className="ticket-card" onClick={onClick}>
+    <button
+      className={`ticket-card ${isAuto ? "ticket-card--auto" : "ticket-card--human"}`}
+      onClick={onClick}
+      style={{ "--stagger": `${index * 45}ms` }}
+    >
       <div className="ticket-card__top">
         <span className="ticket-card__id mono">{ticket.ticket_id}</span>
-        <span
-          className="ticket-card__confidence mono"
-          style={{ color: isAuto ? "var(--auto)" : "var(--human)" }}
-        >
-          {Math.round(ticket.confidence * 100)}%
-        </span>
+        <ConfidenceRing value={ticket.confidence} color={tint} size={38} />
       </div>
 
       <p className="ticket-card__desc">{ticket.description}</p>
@@ -44,7 +44,15 @@ export default function TicketCard({ ticket, onClick }) {
         >
           {actionLabel}
         </span>
-        <MatchBar precedents={ticket.precedents} />
+        <div className="ticket-card__precedent-dots" title={`${ticket.precedents.length} similar past tickets`}>
+          {ticket.precedents.map((p, i) => (
+            <span
+              key={p.ticket_id || i}
+              className="ticket-card__dot"
+              style={{ "--strength": p.similarity, "--tint": tint }}
+            />
+          ))}
+        </div>
       </div>
 
       {!isAuto && reasonLabel && (
@@ -56,6 +64,8 @@ export default function TicketCard({ ticket, onClick }) {
           {ticket.blocked_by_guardrail ? "⛔" : "◐"} {reasonLabel}
         </div>
       )}
+
+      <span className="ticket-card__glow" style={{ "--tint": tint }} />
     </button>
   );
 }
