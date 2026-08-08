@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* --- color tokens ------------------------------------------------ */
+  --bg: #0a0d11;
+  --surface: #12161c;
+  --surface-raised: #181d25;
+  --border: #232a34;
+  --border-soft: #1b212a;
+
+  --text-primary: #e7eaee;
+  --text-secondary: #9aa4b2;
+  --text-muted: #616b79;
+
+  --auto: #4fd1ae;
+  --auto-dim: rgba(79, 209, 174, 0.12);
+  --human: #f0a83c;
+  --human-dim: rgba(240, 168, 60, 0.12);
+  --blocked: #ee6a8a;
+  --blocked-dim: rgba(238, 106, 138, 0.12);
+
+  /* --- type ----------------------------------------------------------- */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(79, 209, 174, 0.05), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(240, 168, 60, 0.04), transparent 45%);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--auto-dim);
+}
+
+:focus-visible {
+  outline: 2px solid var(--auto);
+  outline-offset: 2px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
