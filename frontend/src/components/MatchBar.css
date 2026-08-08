@@ -1,0 +1,35 @@
+.matchbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+}
+
+.matchbar--lg {
+  height: 40px;
+  gap: 6px;
+}
+
+.matchbar__tick {
+  width: 6px;
+  height: 100%;
+  background: var(--border-soft);
+  border-radius: 2px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.matchbar--lg .matchbar__tick {
+  width: 12px;
+  border-radius: 3px;
+}
+
+.matchbar__fill {
+  display: block;
+  width: 100%;
+  height: calc(var(--strength, 0) * 100%);
+  min-height: 2px;
+  background: linear-gradient(180deg, var(--auto), #2f8f78);
+  border-radius: 2px;
+}
