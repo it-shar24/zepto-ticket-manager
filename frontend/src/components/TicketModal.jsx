@@ -1,5 +1,7 @@
 import { useState } from "react";
 import MatchBar from "./MatchBar";
+import GuardrailReceipt from "./GuardrailReceipt";
+import NaiveCompare from "./NaiveCompare";
 import "./TicketModal.css";
 
 const ACTION_OPTIONS = [
@@ -70,6 +72,16 @@ export default function TicketModal({ ticket, onClose, onOverride }) {
               </div>
             </div>
           </div>
+          <p className="modal__formula mono">
+            0.6 × {ticket.confidence_breakdown.avg_similarity.toFixed(2)} + 0.4 ×{" "}
+            {ticket.confidence_breakdown.agreement_ratio.toFixed(2)} ={" "}
+            <strong>{ticket.confidence.toFixed(2)}</strong>
+          </p>
+        </div>
+
+        <div className="modal__section">
+          <h3 className="modal__section-title">Guardrail checks</h3>
+          <GuardrailReceipt ticket={ticket} />
         </div>
 
         <div className="modal__section">
@@ -94,6 +106,7 @@ export default function TicketModal({ ticket, onClose, onOverride }) {
         <div className="modal__section">
           <h3 className="modal__section-title">Drafted reply</h3>
           <p className="modal__reply">{ticket.reply}</p>
+          <NaiveCompare ticket={ticket} />
         </div>
 
         {ticket.human_override && (

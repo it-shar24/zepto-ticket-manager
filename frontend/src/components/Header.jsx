@@ -1,6 +1,14 @@
 import "./Header.css";
 
-export default function Header({ onProcess, processing, hasResults, counts }) {
+export default function Header({
+  onProcess,
+  processing,
+  hasResults,
+  counts,
+  streaming = false,
+  streamProgress = 0,
+  streamTotal = 0,
+}) {
   return (
     <header className="header">
       <div className="header__identity">
@@ -16,7 +24,13 @@ export default function Header({ onProcess, processing, hasResults, counts }) {
       </div>
 
       <div className="header__right">
-        {hasResults && (
+        {streaming && (
+          <div className="header__stream mono">
+            <span className="header__stream-dot" />
+            streaming {streamProgress}/{streamTotal}
+          </div>
+        )}
+        {hasResults && !streaming && (
           <div className="header__counts">
             <span className="header__count header__count--auto">
               <span className="header__count-dot" />

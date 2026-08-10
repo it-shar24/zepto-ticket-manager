@@ -5,12 +5,20 @@ import TicketModal from "./components/TicketModal";
 import { getResults, processTickets, overrideTicket } from "./api";
 import "./App.css";
 
+const STREAM_DELAY_MS = 180; // pace of the live reveal — tuned for a room to read each card
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function App() {
   const [tickets, setTickets] = useState([]);
   const [status, setStatus] = useState("loading"); // loading | empty | ready | error
   const [processing, setProcessing] = useState(false);
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState(null);
+  const [streaming, setStreaming] = useState(false);
+  const [streamTotal, setStreamTotal] = useState(0);
 
   async function loadResults() {
     try {
@@ -18,6 +26,8 @@ export default function App() {
       if (data.count === 0) {
         setStatus("empty");
       } else {
+        // first load: just show the board, no need to re-animate a demo
+        // that already ran — the live reveal is for the Process click itself.
         setTickets(data.results);
         setStatus("ready");
       }
@@ -31,13 +41,24 @@ export default function App() {
     loadResults();
   }, []);
 
+  async function streamIn(results) {
+    setStreaming(true);
+    setStreamTotal(results.length);
+    setTickets([]);
+    setStatus("ready");
+    for (const ticket of results) {
+      setTickets((prev) => [...prev, ticket]);
+      await wait(STREAM_DELAY_MS);
+    }
+    setStreaming(false);
+  }
+
   async function handleProcess() {
     setProcessing(true);
     setError(null);
     try {
       const data = await processTickets(status === "ready"); // force reprocess only if already have results
-      setTickets(data.results);
-      setStatus("ready");
+      await streamIn(data.results);
     } catch (e) {
       setError(e.message);
       setStatus("error");
@@ -63,6 +84,9 @@ export default function App() {
         processing={processing}
         hasResults={status === "ready"}
         counts={{ auto: autoTickets.length, human: humanTickets.length }}
+        streaming={streaming}
+        streamProgress={tickets.length}
+        streamTotal={streamTotal}
       />
 
       <main className="app__main">

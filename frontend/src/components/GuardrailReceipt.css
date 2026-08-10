@@ -1,0 +1,68 @@
+.guardrail-receipt {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guardrail-receipt__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(4px);
+  animation: guardrail-in 0.35s ease forwards;
+  animation-delay: var(--stagger, 0ms);
+}
+
+@keyframes guardrail-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.guardrail-receipt__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.guardrail-receipt__row--pass .guardrail-receipt__icon {
+  background: color-mix(in srgb, var(--auto) 18%, transparent);
+  color: var(--auto);
+}
+
+.guardrail-receipt__row--fail .guardrail-receipt__icon {
+  background: color-mix(in srgb, var(--blocked) 18%, transparent);
+  color: var(--blocked);
+}
+
+.guardrail-receipt__label {
+  flex: 1;
+}
+
+.guardrail-receipt__row--fail .guardrail-receipt__label {
+  color: var(--text-primary);
+}
+
+.guardrail-receipt__note {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.guardrail-receipt__row--fail .guardrail-receipt__note {
+  color: var(--blocked);
+}

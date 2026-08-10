@@ -124,6 +124,20 @@
   margin-top: 2px;
 }
 
+.modal__formula {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.modal__formula strong {
+  color: var(--text-primary);
+}
+
 .modal__precedents {
   display: flex;
   flex-direction: column;

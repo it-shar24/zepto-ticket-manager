@@ -1,0 +1,76 @@
+.naive-compare {
+  margin-top: 4px;
+}
+
+.naive-compare__toggle {
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.naive-compare__toggle:hover {
+  border-color: var(--violet);
+  color: var(--text-primary);
+}
+
+.naive-compare__grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  animation: guardrail-in 0.25s ease;
+}
+
+.naive-compare__col {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.naive-compare__col p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+}
+
+.naive-compare__col--naive {
+  background: color-mix(in srgb, var(--blocked) 8%, var(--surface));
+}
+
+.naive-compare__col--ours {
+  background: color-mix(in srgb, var(--auto) 8%, var(--surface));
+}
+
+.naive-compare__col-label {
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+}
+
+.naive-compare__col--naive .naive-compare__col-label {
+  color: var(--blocked);
+}
+
+.naive-compare__col--ours .naive-compare__col-label {
+  color: var(--auto);
+}
+
+.naive-compare__caption {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+@media (max-width: 520px) {
+  .naive-compare__grid {
+    grid-template-columns: 1fr;
+  }
+}
